@@ -41,10 +41,12 @@ class covid19tracker:
         return driver
 
     def totalindiawise(self,driver):
-        total_cases_india=driver.find_element_by_xpath("/html/body/div/div/div[3]/div[1]/div[2]/div[1]/h1").text
-        total_activecases_india=driver.find_element_by_xpath("/html/body/div/div/div[3]/div[1]/div[2]/div[2]/h1").text
-        total_recoveredcases_india=driver.find_element_by_xpath("/html/body/div/div/div[3]/div[1]/div[2]/div[3]/h1").text
-        total_deceased_india=driver.find_element_by_xpath("/html/body/div/div/div[3]/div[1]/div[2]/div[4]/h1").text
+        time.sleep(3)
+        # total_cases_india=driver.find_element_by_xpath('/html/body/div/div/div[3]/div[1]/div[2]/div[2]/div[1]/h1').text
+        total_cases_india = driver.find_element_by_css_selector("#root > div > div.Home > div.home-left > div:nth-child(2) > div.Level > div.level-item.is-confirmed.fadeInUp > h1").get_attribute('innerHTML')
+        total_activecases_india=driver.find_element_by_css_selector("#root > div > div.Home > div.home-left > div:nth-child(2) > div.Level > div.level-item.is-active.fadeInUp > h1").get_attribute('innerHTML')
+        total_recoveredcases_india=driver.find_element_by_css_selector("#root > div > div.Home > div.home-left > div:nth-child(2) > div.Level > div.level-item.is-recovered.fadeInUp > h1").get_attribute('innerHTML')
+        total_deceased_india=driver.find_element_by_css_selector("#root > div > div.Home > div.home-left > div:nth-child(2) > div.Level > div.level-item.is-deceased.fadeInUp > h1").get_attribute('innerHTML')
         os.system('cls')
         print("---CASES IN INDIA TILL NOW---")
         print("Total Cases:- ",end='')
@@ -58,9 +60,9 @@ class covid19tracker:
         print()
 
     def todayindiawise(self,driver):
-        today_cases_india=driver.find_element_by_xpath("/html/body/div/div/div[3]/div[1]/div[2]/div[1]/h4").text
-        today_recoveredcases_india=driver.find_element_by_xpath("/html/body/div/div/div[3]/div[1]/div[2]/div[3]/h4").text
-        today_deceased_india=driver.find_element_by_xpath("/html/body/div/div/div[3]/div[1]/div[2]/div[4]/h4").text
+        today_cases_india=driver.find_element_by_css_selector("#root > div > div.Home > div.home-left > div:nth-child(2) > div.Level > div.level-item.is-confirmed.fadeInUp > h4").get_attribute('innerHTML')
+        today_recoveredcases_india=driver.find_element_by_css_selector("#root > div > div.Home > div.home-left > div:nth-child(2) > div.Level > div.level-item.is-recovered.fadeInUp > h4").get_attribute('innerHTML')
+        today_deceased_india=driver.find_element_by_css_selector("#root > div > div.Home > div.home-left > div:nth-child(2) > div.Level > div.level-item.is-deceased.fadeInUp > h4").get_attribute('innerHTML')
         print("---TODAY CASES IN INDIA---")
         print("Total Cases:- ",end='')
         print(today_cases_india)
@@ -71,25 +73,30 @@ class covid19tracker:
         print()
 
     def statewise(self,driver,statename):
-        for i in range(2,39):
-            x_path_state="/html/body/div/div/div[3]/div[1]/div[5]/div["+str(i)+"]/div[1]/div"
+        for i in range(2,37):
+                        # /html/body/div/div/div[3]/div[1]/div[4]/div/div[36]/div[1]/div?
+                        # /html/body/div/div/div[3]/div[1]/div[4]/div/div[2]/div[1]/div
+                        
+            x_path_state="/html/body/div/div/div[3]/div[1]/div[4]/div/div["+str(i)+"]/div[1]/div"
             state=driver.find_element_by_xpath(x_path_state).text
             if statename.lower()==state.lower():
                 print("---CASES IN "+state.upper()+" TILL NOW---")
                 print("Total Cases:- ",end='')
-                x_path_t="/html/body/div/div/div[3]/div[1]/div[5]/div["+str(i)+"]/div[2]/div[2]"
+                # /html/body/div/div/div[3]/div[1]/div[4]/div/div[2]/div[2]/div[2]
+                x_path_t="/html/body/div/div/div[3]/div[1]/div[4]/div/div["+str(i)+"]/div[2]/div[2]"
                 print(driver.find_element_by_xpath(x_path_t).text)
                 print("Active Cases:- ",end='')
-                x_path_a="/html/body/div/div/div[3]/div[1]/div[5]/div["+str(i)+"]/div[3]/div"
+
+                x_path_a="/html/body/div/div/div[3]/div[1]/div[4]/div/div["+str(i)+"]/div[3]/div"
                 print(driver.find_element_by_xpath(x_path_a).text)
                 print("Recovered:- ",end='')
-                x_path_r="/html/body/div/div/div[3]/div[1]/div[5]/div["+str(i)+"]/div[4]/div[2]"
+                x_path_r="/html/body/div/div/div[3]/div[1]/div[4]/div/div["+str(i)+"]/div[4]/div[2]"
                 print(driver.find_element_by_xpath(x_path_r).text)
                 print("Deceased:- ",end='')
-                x_path_d="/html/body/div/div/div[3]/div[1]/div[5]/div["+str(i)+"]/div[5]/div[2]"
+                x_path_d="/html/body/div/div/div[3]/div[1]/div[4]/div/div["+str(i)+"]/div[5]/div[2]"
                 print(driver.find_element_by_xpath(x_path_d).text)
                 print()
-                driver.find_element_by_xpath("/html/body/div/div/div[3]/div[1]/div[5]/div["+str(i)+"]/div[1]").click()
+                driver.find_element_by_xpath("/html/body/div/div/div[3]/div[1]/div[4]/div/div["+str(i)+"]/div[1]").click()
                 return i
         print("No State Found i.e "+statename)
         return 0
@@ -97,25 +104,25 @@ class covid19tracker:
     def citywise(self,driver,cityname,temp):
         i=temp+3
         while True:
-            x_path_state="/html/body/div/div/div[3]/div[1]/div[5]/div["+str(i)+"]/div[1]/div"
+            x_path_city="/html/body/div/div/div[3]/div[1]/div[4]/div/div["+str(i)+"]/div[1]/div"
             try:
-                city=driver.find_element_by_xpath(x_path_state).text
+                city=driver.find_element_by_xpath(x_path_city).text
             except:
                 print("No City Found i.e "+cityname)
                 break
             if cityname.lower()==city.lower():
                 print("---CASES IN "+city.upper()+" TILL NOW---")
                 print("Total Cases:- ",end='')
-                x_path_t="/html/body/div/div/div[3]/div[1]/div[5]/div["+str(i)+"]/div[2]/div[2]"
+                x_path_t="/html/body/div/div/div[3]/div[1]/div[4]/div/div["+str(i)+"]/div[2]/div[2]"
                 print(driver.find_element_by_xpath(x_path_t).text)
                 print("Active Cases:- ",end='')
-                x_path_a="/html/body/div/div/div[3]/div[1]/div[5]/div["+str(i)+"]/div[3]/div"
+                x_path_a="/html/body/div/div/div[3]/div[1]/div[4]/div/div["+str(i)+"]/div[3]/div"
                 print(driver.find_element_by_xpath(x_path_a).text)
                 print("Recovered:- ",end='')
-                x_path_r="/html/body/div/div/div[3]/div[1]/div[5]/div["+str(i)+"]/div[4]/div[2]"
+                x_path_r="/html/body/div/div/div[3]/div[1]/div[4]/div/div["+str(i)+"]/div[4]/div[2]"
                 print(driver.find_element_by_xpath(x_path_r).text)
                 print("Deceased:- ",end='')
-                x_path_d="/html/body/div/div/div[3]/div[1]/div[5]/div["+str(i)+"]/div[5]/div[2]"
+                x_path_d="/html/body/div/div/div[3]/div[1]/div[4]/div/div["+str(i)+"]/div[5]/div[2]"
                 print(driver.find_element_by_xpath(x_path_d).text)
                 break
             i+=1
